@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<div>
+    <div>
+        <h2>Add item</h2>
+        <form action="add_todo/{{user.username}}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="content" placeholder="type here" class="get-input"><br>
+            <button type="submit" class="button-submit">Submit</button>
+        </form>
+        
+    </div>
+</div>
+{% endif %}
+<br>
+
+
+{% if user.is_authenticated %}
+<div>
+    {% for todo_item in todo_items %}
+    {% if todo_item.user_name == user.username %}
+    <div>
+        <ul class="ulist">
+            <li class="ul-list">{{todo_item.text}}</li>
+            <div>
+                <form action="delete_todo/{{todo_item.id}}">
+                    <button type="submit" class="ul-list-delete">DELETE</button><br/>
+                </form>
+            </div>
+        </ul>
+        
+        
+
+    </div>
+
+    
+    {% endif %}
+    {% endfor %}
+</div>
+<br>
+{% endif %}
+
+
+
+{% endblock %}
